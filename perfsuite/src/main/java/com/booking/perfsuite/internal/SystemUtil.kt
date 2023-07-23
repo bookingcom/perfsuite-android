@@ -1,5 +1,6 @@
 package com.booking.perfsuite.internal
 
+import android.app.ActivityManager
 import android.os.SystemClock
 
 /**
@@ -9,3 +10,15 @@ import android.os.SystemClock
  * @return current time in milliseconds
  */
 internal fun nowMillis(): Long = SystemClock.uptimeMillis()
+
+/**
+ * Detects if the process is currently in "foreground" state by checking
+ * [android.app.ActivityManager.RunningAppProcessInfo.importance]
+ *
+ * @return `true` if the process is currently  in "foreground" state
+ */
+internal fun isForegroundProcess(): Boolean {
+    val processInfo = ActivityManager.RunningAppProcessInfo()
+    ActivityManager.getMyMemoryState(processInfo)
+    return processInfo.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND
+}
