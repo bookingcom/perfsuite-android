@@ -32,6 +32,8 @@ android {
 }
 
 dependencies {
+    implementation(project(":perfsuite"))
+
     implementation(libs.androidx.ktx)
     implementation(libs.androidx.appcompat)
 }

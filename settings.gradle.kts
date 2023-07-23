@@ -17,3 +17,4 @@ dependencyResolutionManagement {
 }
 
 include(":sampleApp")
+include(":perfsuite")
