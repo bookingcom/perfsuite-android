@@ -25,7 +25,7 @@ public object AppStartupTimeTracker {
      * @param listener callback to be invoked as soon as startup time is ready
      */
     @JvmStatic
-    public fun addStartupTimeListener(application: Application, listener: Listener) {
+    public fun register(application: Application, listener: Listener) {
         if(!isForegroundProcess()) return
 
         val appOnCreateTime = nowMillis()

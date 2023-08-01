@@ -12,8 +12,8 @@ class SampleApp : Application() {
         super.onCreate()
 
         // setup startup time tracking
-        AppStartupTimeTracker.addStartupTimeListener(this, AppStartupTimeListener)
+        AppStartupTimeTracker.register(this, AppStartupTimeListener)
         // setup rendering performance tracking
-        ActivityFrameMetricsTracker(ActivityFrameMetricsListener).selfRegister(this)
+        ActivityFrameMetricsTracker.register(this, ActivityFrameMetricsListener)
     }
 }

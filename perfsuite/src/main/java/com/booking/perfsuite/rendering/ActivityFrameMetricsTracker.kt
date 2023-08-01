@@ -15,21 +15,30 @@ import java.util.WeakHashMap
  * which automatically collects frame metrics for every Activity in the app
  */
 @UiThread
-public class ActivityFrameMetricsTracker(
+public class ActivityFrameMetricsTracker private constructor(
     private val listener: Listener
 ) : Application.ActivityLifecycleCallbacks {
 
     private val aggregator = FrameMetricsAggregator()
     private val activityStartTimes = WeakHashMap<Activity, Long>()
 
-    /**
-     * Registers current [ActivityFrameMetricsTracker] instance with the app as
-     * [android.app.Application.ActivityLifecycleCallbacks].
-     *
-     * Call this method at the app startup, before the first activity is created
-     */
-    public fun selfRegister(application: Application) {
-        application.registerActivityLifecycleCallbacks(this)
+    public companion object {
+
+        /**
+         * Registers [ActivityFrameMetricsTracker] instance with the app as
+         * [android.app.Application.ActivityLifecycleCallbacks] to collect frame metrics for
+         * every activity
+         *
+         * Call this method at the app startup, before the first activity is created
+         *
+         * @param application current [Application] instance
+         * @param listener callback invoked every time when any activity's frame metrics are ready
+         */
+        @JvmStatic
+        public fun register(application: Application, listener: Listener) {
+            val frameMetricsTracker = ActivityFrameMetricsTracker(listener)
+            application.registerActivityLifecycleCallbacks(frameMetricsTracker)
+        }
     }
 
     override fun onActivityStarted(activity: Activity) {
