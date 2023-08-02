@@ -1,6 +1,7 @@
 # PerformanceSuite Android
 
-![CI status](https://github.com/bookingcom/perfsuite-android/actions/workflows/ci.yml/badge.svg)
+[![CI status](https://github.com/bookingcom/perfsuite-android/actions/workflows/ci.yml/badge.svg)](https://github.com/bookingcom/perfsuite-android/actions/workflows/ci.yml)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://github.com/bookingcom/perfsuite-android/blob/main/LICENSE)
 
 Lightweight library designed to measure and collect performance metrics for Android applications 
 in production.
