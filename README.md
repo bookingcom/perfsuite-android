@@ -1,5 +1,7 @@
 # PerformanceSuite Android
 
+![CI status](https://github.com/bookingcom/perfsuite-android/actions/workflows/ci.yml/badge.svg)
+
 Lightweight library designed to measure and collect performance metrics for Android applications 
 in production.
 
