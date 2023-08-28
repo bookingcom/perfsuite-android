@@ -16,6 +16,13 @@ Library supports collecting following performance metrics:
 - App Cold Startup Time
 - Rendering performance per Activity
 
+### Dependency
+
+The library is available on Maven Central:
+```groovy
+implementation("com.booking:perfsuite:0.1")
+```
+
 ### Collecting Startup Times
 
 Implement the callback invoked once Startup Time is collected:
