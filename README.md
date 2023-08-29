@@ -21,7 +21,7 @@ Library supports collecting following performance metrics:
 
 The library is available on Maven Central:
 ```groovy
-implementation("com.booking:perfsuite:0.1")
+implementation("com.booking:perfsuite:0.2")
 ```
 
 ### Collecting Startup Times
@@ -56,7 +56,8 @@ class MyApplication : Application() {
 ### Collecting Frame Metrics
 
 Implement the callback invoked every time when the foreground `Activity` is paused 
-(we can call it "the end of the screen session"):
+(we can call it "the end of the screen session") and use `RenderingMetricsMapper` to
+represent rendering performance metrics in a convenient aggregated format:
 
 ```kotlin
 class MyFrameMetricsListener : ActivityFrameMetricsTracker.Listener {
@@ -66,6 +67,7 @@ class MyFrameMetricsListener : ActivityFrameMetricsTracker.Listener {
         frameMetrics: Array<SparseIntArray>,
         foregroundTime: Long?
     ) {
+        val data = RenderingMetricsMapper.toRenderingMetrics(frameMetrics, foregroundTime) ?: return
         // Log or report Frame Metrics for current Activity's "session" in a preferable way
     }
 }
