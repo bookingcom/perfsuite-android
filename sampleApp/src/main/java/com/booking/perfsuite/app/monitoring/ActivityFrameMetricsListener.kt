@@ -4,6 +4,7 @@ import android.app.Activity
 import android.util.Log
 import android.util.SparseIntArray
 import com.booking.perfsuite.rendering.ActivityFrameMetricsTracker
+import com.booking.perfsuite.rendering.RenderingMetricsMapper
 
 internal object ActivityFrameMetricsListener : ActivityFrameMetricsTracker.Listener {
 

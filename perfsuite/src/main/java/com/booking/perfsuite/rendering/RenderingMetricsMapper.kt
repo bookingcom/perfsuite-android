@@ -1,13 +1,17 @@
-package com.booking.perfsuite.app.monitoring
+package com.booking.perfsuite.rendering
 
 import android.util.SparseIntArray
 import androidx.core.app.FrameMetricsAggregator
 import androidx.core.util.forEach
 import androidx.core.util.isEmpty
 
-internal object RenderingMetricsMapper {
+public object RenderingMetricsMapper {
 
-    fun toRenderingMetrics(
+    /**
+     * Aggregates raw frames data collected by [ActivityFrameMetricsTracker] into
+     * [RenderingMetrics] data class, which is more suitable for reporting & metric analysis
+     */
+    public fun toRenderingMetrics(
         metrics: Array<SparseIntArray>?,
         foregroundTime: Long?
     ): RenderingMetrics? {
@@ -37,10 +41,10 @@ internal object RenderingMetricsMapper {
         }
 
         return RenderingMetrics(
-            total = total,
-            slow = slow,
-            frozen = frozen,
-            dropped = dropped,
+            totalFrames = total,
+            slowFrames = slow,
+            frozenFrames = frozen,
+            droppedFrames = dropped,
             totalFreezeTimeMs = totalFreezeTime,
             foregroundTimeMs = foregroundTime
         )
