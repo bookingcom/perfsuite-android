@@ -89,7 +89,7 @@ class MyApplication : Application() {
 }
 ```
 
-As per thee code sample above you can use `RenderingMetricsMapper` to collect frames metics in the aggreated format which is convenient for reporting to the backend.
+As per the code sample above you can use `RenderingMetricsMapper` to collect frames metics in the aggreated format which is convenient for reporting to the backend.
 Then metrics will be represented as [`RenderingMetrics`](src/main/java/com/booking/perfsuite/rendering/RenderingMetrics.kt) instance, which will provide data on:
 - `totalFrames` - total amount of frames rendered during the screen session
 - `totalFreezeTimeMs` - total accumulated time of the UI being frozen during the screen session
