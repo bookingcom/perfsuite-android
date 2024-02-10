@@ -22,7 +22,6 @@ public object RenderingMetricsMapper {
         var total = 0L
         var slow = 0L
         var frozen = 0L
-        var dropped = 0L
         var totalFreezeTime = 0L
 
         totalMetrics.forEach { frameDuration, numberOfFrames ->
@@ -36,15 +35,12 @@ public object RenderingMetricsMapper {
                 totalFreezeTime += frameDuration * numberOfFrames
             }
             total += numberOfFrames.toLong()
-
-            dropped += (frameDuration / SLOW_FRAME_THRESHOLD_MS) * numberOfFrames
         }
 
         return RenderingMetrics(
             totalFrames = total,
             slowFrames = slow,
             frozenFrames = frozen,
-            droppedFrames = dropped,
             totalFreezeTimeMs = totalFreezeTime,
             foregroundTimeMs = foregroundTime
         )
