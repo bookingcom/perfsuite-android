@@ -16,9 +16,13 @@ flexible with re-using the monitoring approaches already existing in your produc
 Library supports collecting following performance metrics:
 - App Cold Startup Time
 - Rendering performance per Activity
+- Time to Interactive & Time to First Render per screen
 
 We recommend to read our blogpost ["Measuring mobile apps performance in production"](https://medium.com/booking-com-development/measuring-mobile-apps-performance-in-production-726e7e84072f) 
-first to get some idea on how performance metrics work and why those were chosen.
+first to get some idea on what are these performance metrics, how they work and why those were chosen.
+
+> NOTE: You can also refer to the [SampleApp](sampleApp/src/main/java/com/booking/perfsuite/app) 
+> in this repo to see a simplified example of how the library can be used in the real app
 
 ### Dependency
 
@@ -97,6 +101,55 @@ Then metrics will be represented as [`RenderingMetrics`](src/main/java/com/booki
 - `frozenFrames` - amount of [frozen frames](https://firebase.google.com/docs/perf-mon/screen-traces?platform=android#frozen-frames) per screens session
 
 Even though we support collecting widely used slow & frozen frames we [strongly recommend relying on `totalFreezeTimeMs` as the main rendering metric](https://medium.com/booking-com-development/measuring-mobile-apps-performance-in-production-726e7e84072f#2d5d)
+
+### Collecting Screen Time to Interactive (TTI)
+
+Implement the callbacks invoked every time when screen's
+[Time To Interactive (TTI)](https://medium.com/booking-com-development/measuring-mobile-apps-performance-in-production-726e7e84072f#ad4d) &
+[Time To First Render (TTFR)](https://medium.com/booking-com-development/measuring-mobile-apps-performance-in-production-726e7e84072f#f862)
+metrics are collected:
+
+```kotlin
+object MyTtiListener : BaseTtiTracker.Listener {
+
+    override fun onScreenCreated(screen: String) {}
+
+    override fun onFirstFrameIsDrawn(screen: String, duration: Long) {
+        // Log or report TTFR metrics for specific screen in a preferable way
+    }
+    override fun onFirstUsableFrameIsDrawn(screen: String, duration: Long) {
+        // Log or report TTI metrics for specific screen in a preferable way
+    }
+}
+```
+
+Then instantiate TTI tracker in `Application#onCreate` before any activity is created and using this listener:
+
+```kotlin
+// keep instances globally accessible or inject as singletons using any preferable DI framework
+val ttiTracker = BaseTtiTracker(AppTtiListener)
+val viewTtiTracker = ViewTtiTracker(ttiTracker)
+
+class MyApplication : Application() {
+
+    override fun onCreate() {
+        super.onCreate()
+        ActivityTtfrHelper.register(this, viewTtiTracker)
+    }
+}
+```
+
+That will enable automatic TTFR collection for every Activity in the app.
+For TTI collection you'll need to call `viewTtiTracker.onScreenIsUsable(..)` manually from the Activity, 
+when the meaningful data is visible to the user e.g.:
+
+```kotlin
+// call this e.g. when the data is received from the backend,
+// progress bar stops spinning and screen is fully ready for the user
+viewTtiTracker.onScreenIsUsable(activity.componentName, rootContentView)
+```
+
+See the [SampleApp](sampleApp/src/main/java/com/booking/perfsuite/app) for a full working example
 
 ## Additional documentation
 - [Measuring mobile apps performance in production](https://medium.com/booking-com-development/measuring-mobile-apps-performance-in-production-726e7e84072f) 
