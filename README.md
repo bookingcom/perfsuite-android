@@ -28,7 +28,7 @@ first to get some idea on what are these performance metrics, how they work and 
 
 The library is available on Maven Central:
 ```groovy
-implementation("com.booking:perfsuite:0.2")
+implementation("com.booking:perfsuite:0.3")
 ```
 
 ### Collecting Startup Times
