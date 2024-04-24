@@ -151,6 +151,23 @@ viewTtiTracker.onScreenIsUsable(activity.componentName, rootContentView)
 
 See the [SampleApp](sampleApp/src/main/java/com/booking/perfsuite/app) for a full working example
 
+#### Collecting TTI/TTFR for `Fragment`-based screens in single-Activity apps
+
+The example above works for `Activity`-based screens, however if you use the "Single-Activity" approach you also need
+to enable TTI/TTFR tracking for the Fragments inside you main Activity:
+
+```kotlin
+class MyMainActivity : Activity() {
+
+    override fun onCreate() {
+        super.onCreate()
+        val fragmentHelper = FragmentTtfrHelper(viewTtiTracker)
+        supportFragmentManager.registerFragmentLifecycleCallbacks(fragmentHelper, true)
+    }
+}
+```
+Then you can call `viewTtiTracker.onScreenIsUsable(..)` in Fragments the same way as described above. 
+
 ## Additional documentation
 - [Measuring mobile apps performance in production](https://medium.com/booking-com-development/measuring-mobile-apps-performance-in-production-726e7e84072f) 
 - [App Startup Time documentation by Google](https://developer.android.com/topic/performance/vitals/launch-time)
